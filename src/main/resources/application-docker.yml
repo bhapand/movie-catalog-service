@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: movie-catalog-service
+  webflux:
+    base-path: /catalogs/api
+  data:
+    mongodb:
+      authentication-database: admin
+      database: catalogs
+      username: admin
+      password: password
+      host: mongo-dev
+
+
+server:
+  port: 8001
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8762/eureka/
+  instance:
+    hostname: ${spring.application.name}
+    appname: ${spring.application.name}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+    ratelimiters:
+      enabled: true
+
+resilience4j:
+  ratelimiter:
+    metrics:
+      enabled: true
+    instances:
+      rateLimiterApi:
+        register-health-indicator: true

@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8082:8081
+    environment:
+        ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+        ME_CONFIG_MONGODB_ADMINPASSWORD: password
+        ME_CONFIG_MONGODB_URL: mongodb://admin:password@mongo-dev:27017/
+
+    restart: always
+
+  mongodb:
+    container_name: mongo-dev
+    image: mongo
+    restart: always
+    ports:
+      - 6001:27017
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: admin
+        MONGO_INITDB_ROOT_PASSWORD: password
+networks:
+  default:
+    name: spring-ms
+    external: true
